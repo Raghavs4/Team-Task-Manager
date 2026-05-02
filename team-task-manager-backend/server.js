@@ -28,6 +28,16 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/tasks',    require('./routes/taskRoutes'));
 app.use('/api/dashboard',require('./routes/dashboardRoutes'));
 
+const path = require("path");
+
+// Serve frontend
+app.use(express.static(path.join(__dirname, "dist")));
+
+// React routing support
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 // Health check route
 app.get('/', (req, res) => {
   res.json({ message: 'Team Task Manager API is running ✅' });
