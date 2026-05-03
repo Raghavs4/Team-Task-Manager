@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const API =
   import.meta.env.MODE === 'development'
-    ? 'http://localhost:5000'
-    : ''  // production → same domain
+    ? 'http://localhost:5000/api'
+    : '/api'
 
 const api = axios.create({
   baseURL: API,
@@ -12,7 +12,7 @@ const api = axios.create({
   },
 })
 
-// Request interceptor — attach JWT token from localStorage
+// Request interceptor
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')
@@ -24,7 +24,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-// Response interceptor — handle 401 globally
+// Response interceptor
 api.interceptors.response.use(
   (response) => response,
   (error) => {
